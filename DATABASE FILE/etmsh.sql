@@ -149,3 +149,39 @@ MODIFY `user_id` int(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- Create comments table
+CREATE TABLE attendance_log (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    aten_id INT,
+    atn_user_id INT,
+    in_time DATETIME,
+    out_time DATETIME,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+DELIMITER //
+
+CREATE TRIGGER after_attendance_insert
+AFTER INSERT ON attendance_info
+FOR EACH ROW
+BEGIN
+    INSERT INTO attendance_log (aten_id, atn_user_id, in_time, out_time) 
+    VALUES (NEW.aten_id, NEW.atn_user_id, NEW.in_time, NEW.out_time);
+END;
+
+//
+
+DELIMITER ;
+INSERT INTO attendance_info (atn_user_id, in_time, out_time, total_duration) 
+VALUES (1, '2023-01-01 09:00:00', '2023-01-01 17:00:00', '8:00:00');
+INSERT INTO attendance_info (atn_user_id, in_time, out_time, total_duration) 
+VALUES (1, '2024-12-27 09:00:00', '2024-12-27 17:00:00', '8:00:00');
+
+-- Ensure that the start time of a task is before the end time
+ALTER TABLE task_info
+ADD CONSTRAINT chk_task_time CHECK (t_start_time < t_end_time);
+
+ALTER TABLE task_info ADD COLUMN deadline DATETIME NOT NULL;
+ALTER TABLE task_info MODIFY COLUMN deadline DATETIME NOT NULL;
+UPDATE task_info SET deadline = NOW();  -- or set to a specific date
+SELECT * FROM task_info WHERE deadline IS NULL OR deadline = '0000-00-00 00:00:00';
+UPDATE task_info SET deadline = NOW() WHERE deadline IS NULL OR deadline = '0000-00-00 00:00:00';
