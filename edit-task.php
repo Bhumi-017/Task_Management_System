@@ -55,7 +55,7 @@ $unix_current_time = $currentDateTime->getTimestamp();
 			<div class="well">
 			<h3 class="text-center bg-primary" style="padding: 7px;">Edit Task </h3><br>
 
-<<<<<<< HEAD
+
                       <div class="row">
                         <div class="col-md-12">
                           <form class="form-horizontal" role="form" action="" method="post" autocomplete="off">
@@ -83,7 +83,7 @@ $unix_current_time = $currentDateTime->getTimestamp();
 			                      <input type="text" name="t_end_time" id="t_end_time" class="form-control" value="<?php echo $row['t_end_time']; ?>">
 			                    </div>
 			                  </div>
-=======
+
 					<div class="row">
 					<div class="col-md-12">
 						<form class="form-horizontal" role="form" action="" method="post" autocomplete="off">
@@ -111,7 +111,6 @@ $unix_current_time = $currentDateTime->getTimestamp();
 								<input type="text" name="t_end_time" id="t_end_time" class="form-control" value="<?php echo $row['t_end_time']; ?>">
 							</div>
 							</div>
->>>>>>> 35035a21b45ac4a2dbea874be13b2e9f1751983d
 
 							<div class="form-group">
 							<label class="control-label col-sm-5">Assign To</label>
